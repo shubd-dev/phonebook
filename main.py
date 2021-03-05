@@ -2,7 +2,7 @@
 #accept user input to create ,
 # existing contact class can delete contact, modify name and number of existing contact, 
 # search number based on name
-# adding a comment to test github2.0
+# adding a comment to test github
 # create command line interface and then connect it with pysimple gui with frontend based
 
 import sqlite3
