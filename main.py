@@ -17,18 +17,20 @@ class new_contact():
             number text NOT NULL)''')
         
     def asking_stuff(self):
-        self.__ask_name()
-        self.__ask_contact()
+        self.ask_name()
+        self.ask_contact()
         self.__surity()
         
 
-    def __ask_name(self):
+    def ask_name(self):
         name = input("Enter name:")
         self.__name = name
-        
-    def __ask_contact(self):
+        return name
+
+    def ask_contact(self):
         contact = int(input("Enter contact:"))
         self.__contact = str(contact)
+        return contact
 
     def __surity(self):
         print('Do you want to save this in phonebook?(Y/N)')
@@ -95,36 +97,27 @@ class edit_contact(new_contact):
             
         
     def __edit(self,n,cn):
-        # try:
-        #     self.conn = sqlite3.connect('info.db')
-        #     c = self.conn.cursor()
-        #     query = input('Enter name:')
-        #     if(n == 'name'):
-        #         # query = f'select name from phonebook where {n} = "{query}"'
-        #         # query = (c.fetchone()[0])
-        #         new_name = input("Enter new name:")
-        #         c.execute(f"update phonebook set name = '{new_name}' where name = '{query}';")
-        #         self.conn.commit()
+        try:
+            self.conn = sqlite3.connect('info.db')
+            c = self.conn.cursor()
+            if(n == 'name'):
+                name = new_contact.ask_name(self)
+                c.execute(f'select number from phonebook where name="{name}"')
+                number = c.fetchone()[0]
+                name = input('Enter new name:')
+                c.execute(f'update phonebook set name="{name}" where number="{number}";')
+                
 
-        #     elif(query.isdigit() and n == 'number'):
-        #         pass
-        #     elif(n == 'name'):
-        #         pass
-        #     elif(n == 'name'):
-        #         pass
-        #     # if(query.isdigit()):
-        #     #     new_name = int(input(f'Enter new {n}:'))
-        #     #     c.execute(f"UPDATE phonebook SET {n}='{new_name}' where {cn} = '{query}';")
+            else:
+                name = new_contact.ask_name(self)
+                number = input('Enter new number:')
+                c.execute(f'update phonebook set number="{number}" where name="{name}";')
                 
-        #     # else:
-        #     #     c.execute('SELECT number from phonebook where ')
-        #     #     new_name = input(f'Enter new {n}:')
-        #     #     c.execute(f"UPDATE phonebook SET {n}='{new_name}' where {cn} = '{query}';")
-                
-            
-        # except:
-        #     print('No record found!')  
-        pass
+            self.conn.commit()
+        except:
+            print('No data found')
+
+        
 
 class delete_contact():
     def __init__(self):
@@ -138,7 +131,5 @@ class delete_contact():
             print('no database found')
 
 
-        
 if __name__ == '__main__':
-    a = delete_contact()
-    
+    a = edit_contact()
