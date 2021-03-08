@@ -107,7 +107,6 @@ class edit_contact(new_contact):
                 name = input('Enter new name:')
                 c.execute(f'update phonebook set name="{name}" where number="{number}";')
                 
-
             else:
                 name = new_contact.ask_name(self)
                 number = input('Enter new number:')

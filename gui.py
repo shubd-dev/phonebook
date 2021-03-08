@@ -1,3 +1,4 @@
+import main
 import sys
 try:
     import Tkinter as tk
@@ -38,6 +39,8 @@ def destroy_Toplevel1():
     w.destroy()
     w = None
 
+
+
 class Toplevel1:
     def __init__(self, top=None):
         '''This class configures and populates the toplevel window.
@@ -62,44 +65,54 @@ class Toplevel1:
         top.resizable(1,  1)
         top.title("Phonebook")
 
+        #remains constant forever enter name label
         self.Label1 = tk.Label(top)
         self.Label1.place(relx=0.042, rely=0.035, height=31, width=109)
         self.Label1.configure(text='''Enter name:''')
 
+        #Entery for name
         self.Entry1 = tk.Entry(top)
         self.Entry1.place(relx=0.271, rely=0.035, height=33, relwidth=0.388)
         self.Entry1.configure(background="white")
         self.Entry1.configure(font="TkFixedFont")
 
+        #remains constant forever enter number label
         self.Label2 = tk.Label(top)
         self.Label2.place(relx=0.042, rely=0.159, height=21, width=99)
         self.Label2.configure(text='''Enter number:''')
 
+        #Entry for number
         self.Entry2 = tk.Entry(top)
         self.Entry2.place(relx=0.271, rely=0.159, height=23, relwidth=0.388)
         self.Entry2.configure(background="white")
         self.Entry2.configure(font="TkFixedFont")
 
+        #search button
         self.TButton1 = ttk.Button(top)
         self.TButton1.place(relx=0.042, rely=0.265, height=38, width=103)
         self.TButton1.configure(takefocus="")
         self.TButton1.configure(text='''search''')
 
+        #Add button
         self.TButton2 = ttk.Button(top)
         self.TButton2.place(relx=0.292, rely=0.265, height=38, width=93)
         self.TButton2.configure(takefocus="")
         self.TButton2.configure(text='''Add''')
 
+        #edit name button
         self.TButton3 = ttk.Button(top)
         self.TButton3.place(relx=0.522, rely=0.265, height=38, width=103)
         self.TButton3.configure(takefocus="")
         self.TButton3.configure(text='''Edit Name''')
 
+        #edit number button
         self.TButton4 = ttk.Button(top)
         self.TButton4.place(relx=0.772, rely=0.265, height=38, width=93)
         self.TButton4.configure(takefocus="")
         self.TButton4.configure(text='''Edit Number''')
 
+
+        #label to display additional information
         self.TLabel1 = ttk.Label(top)
         self.TLabel1.place(relx=0.021, rely=0.476, height=279, width=452)
         self.TLabel1.configure(background="#d9d9d9")
@@ -110,6 +123,7 @@ class Toplevel1:
         self.TLabel1.configure(justify='left')
         self.TLabel1.configure(text='''Tlabel''')
 
+        #Label to Display main data
         self.TLabel2 = ttk.Label(top)
         self.TLabel2.place(relx=0.063, rely=0.37, height=19, width=92)
         self.TLabel2.configure(background="#d9d9d9")
@@ -118,7 +132,37 @@ class Toplevel1:
         self.TLabel2.configure(relief="flat")
         self.TLabel2.configure(anchor='w')
         self.TLabel2.configure(justify='left')
-        self.TLabel2.configure(text='''display:''')
+        self.TLabel2.configure(texst='''display:''')
+    
+    def get_name(self):
+        name = self.Entry1.get('1.0')
+        return name
+        
+    def get_number(self):
+        number = self.Entry2.get('1.0')
+        return number
+
+    def search(self):
+        name = self.get_name()
+        number = self.get_number()
+        if(name):
+            pass
+        elif(number):
+            pass
+
+    def add_to_db(self):
+        name = self.get_name()
+        number = self.get_number()
+
+    def edit__Name(self):
+        name = self.get_name()
+        
+    def edit__Number(self):
+        name = self.get_name()
+
+    def display_infomation(self):
+        pass
+
 if __name__ == '__main__':
     vp_start_gui()
 
