@@ -1,14 +1,18 @@
-#create phone which will
-#accept user input to create ,
+# create phone which will
+# accept user input to create ,
 # existing contact class can delete contact, modify name and number of existing contact, 
 # search number based on name
 # adding a comment to test github
 # create command line interface and then connect it with pysimple gui with frontend based
+# No gui becouse i cant understand django and tkinter is .....
 
 import sqlite3
 import os
+
+#Create a new entry inside database phonebook
 class new_contact():
 
+	#create database before entring the database
     def __init__(self):
         print('New contact class used to make a new contact to the database')
         self.conn = sqlite3.connect('info.db')
@@ -44,12 +48,12 @@ class new_contact():
         else:
             print('Invalid choice')
             self.__surity()
-
+#storing in database
     def storing_in_db(self):
         self.conn.execute(f"insert into phonebook values('{self.__name}','{self.__contact}')")
         self.conn.commit()
 
-
+#edit contact class to edit or search preexisting record inside database
 class edit_contact(new_contact):
     
     def __init__(self):
@@ -72,9 +76,9 @@ class edit_contact(new_contact):
 
         else:
             print('No database found')
-        
+#searching within database (standalone function no dependency)        
     def search(self):
-        # try:
+        try:
             self.conn = sqlite3.connect('info.db')
             c = self.conn.cursor()
             i = input("Enter query to search:")
@@ -92,10 +96,10 @@ class edit_contact(new_contact):
                 print('Name: '+str(i[0])+"\nContact :"+str(i[1]))
 
 
-        # except:
-            # print('No record Found!')
+        except:
+             print('No record Found!')
             
-        
+#edit function passed on to edit name or number depending on query
     def __edit(self,n,cn):
         try:
             self.conn = sqlite3.connect('info.db')
@@ -117,7 +121,7 @@ class edit_contact(new_contact):
             print('No data found')
 
         
-
+#delect contact class to delete contact from info db
 class delete_contact():
     def __init__(self):
         try:
@@ -129,6 +133,8 @@ class delete_contact():
         except:
             print('no database found')
 
+
+# default menu option to ask user
 def menu():
 	print("""Welcome to the commandline phonebook app
 		Enter your option:
@@ -146,5 +152,6 @@ def menu():
 		a = delete_contact()
 
 
+#main event to run application
 if __name__ == '__main__':
     menu()
