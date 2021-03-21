@@ -74,26 +74,26 @@ class edit_contact(new_contact):
             print('No database found')
         
     def search(self):
-        try:
+        # try:
             self.conn = sqlite3.connect('info.db')
             c = self.conn.cursor()
             i = input("Enter query to search:")
             if(i.isdigit()):
                 print("Searching by number")
-                query = 'SELECT * FROM phonebook where number="{}"'
+                query = "select * from phonebook where number='{}'"
             else:
                 print('Searching by name')
-                query = 'SELECT * FROM phonebook where name="{}"'
+                query = "select * from phonebook where name='{}'"
 
             c.execute(query.format(i))
             
             a = c.fetchall()
             for i in a:
-                print('Name: '+i[0]+"\nContact :"+i[1])
+                print('Name: '+str(i[0])+"\nContact :"+str(i[1]))
 
 
-        except:
-            print('No record Found!')
+        # except:
+            # print('No record Found!')
             
         
     def __edit(self,n,cn):
@@ -129,6 +129,22 @@ class delete_contact():
         except:
             print('no database found')
 
+def menu():
+	print("""Welcome to the commandline phonebook app
+		Enter your option:
+			1. Create a contact
+			2. Delete a contact
+			3. Edit contact:
+			""")
+	choice = int(input())
+	if(choice == 1):
+		a = new_contact()	
+		a.asking_stuff()
+	elif(choice == 3):
+		a = edit_contact()
+	elif(choice == 2):
+		a = delete_contact()
+
 
 if __name__ == '__main__':
-    a = edit_contact()
+    menu()
