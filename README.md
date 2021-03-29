@@ -43,7 +43,7 @@
 
 
 
-Here's a blank template to get started:
+
 A Command-Line-Interface for storing 
 <ul>
 <li>contact name</li> 
