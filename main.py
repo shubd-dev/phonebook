@@ -32,7 +32,7 @@ class new_contact():
         return name
 
     def ask_contact(self):
-        contact = int(input("Enter contact:"))
+        contact = int(input("Enter contact no.:"))
         self.__contact = str(contact)
         return contact
 
