@@ -7,7 +7,7 @@
 # No gui becouse i cant understand django and tkinter is .....
 
 import sqlite3
-import os
+from os import *
 
 #Create a new entry inside database phonebook
 class new_contact():
@@ -40,10 +40,10 @@ class new_contact():
         print('Do you want to save this in phonebook?(Y/N)')
         print('Name:'+self.__name)
         print('contact:'+str(self.__contact))
-        c = input()
-        if c == 'Y':
+        c = input('# ')
+        if c == 'Y' or c == 'y':
             self.storing_in_db()
-        elif c == 'N':
+        elif c == 'N' or c == 'n':
             self.asking_stuff()
         else:
             print('Invalid choice')
@@ -57,12 +57,14 @@ class new_contact():
 class edit_contact(new_contact):
     
     def __init__(self):
-        if os.path.isfile('info.db'):
-            c = int(input('''Make a choice:
+        if path.isfile('info.db'):
+            clear()
+            print('''Make a choice:
             search database - 1
             edit name - 2
             edit number - 3
-            '''))
+            ''')
+            c = int(input('# '))
             
             if c == 1:
                 self.search()
@@ -125,24 +127,55 @@ class edit_contact(new_contact):
 class delete_contact():
     def __init__(self):
         try:
+            a = []
             self.conn = sqlite3.connect('info.db')
             c = self.conn.cursor()
             name = input("Enter name to delete contact from phonebook:")
-            c.execute(f'delete from phonebook where name="{name}"')
+            for i in c.execute(f'select * from phonebook'):
+                a.append(i[0])
+
+            if name in a:
+                c.execute(f'delete from phonebook where name="{name}"')
+                print('\nContact Deleted Successfully')
+                cls()
+            else:
+                print('Not found inside database')
             self.conn.commit()
         except:
             print('no database found')
 
+    def cls(self):
+  
+        # for windows
+        if name == 'nt':
+            system('cls')
+    
+        # for mac and linux(here, os.name is 'posix')
+        else:
+            system('clear')
+
+# Clears screen
+def clear():
+  
+    # for windows
+    if name == 'nt':
+        _ = system('cls')
+  
+    # for mac and linux(here, os.name is 'posix')
+    else:
+        _ = system('clear')
+
 
 # default menu option to ask user
 def menu():
-	print("""Welcome to the commandline phonebook app
-		Enter your option:
-			1. Create a contact
-			2. Delete a contact
-			3. Edit contact:
-			""")
-	choice = int(input())
+
+	print('''Welcome to the commandline phonebook app
+    Enter your option:
+			1.Create a contact
+			2.Delete a contact
+			3.Edit contact:''')
+
+	choice = int(input('# '))
 	if(choice == 1):
 		a = new_contact()	
 		a.asking_stuff()
@@ -154,4 +187,5 @@ def menu():
 
 #main event to run application
 if __name__ == '__main__':
+    clear()
     menu()
