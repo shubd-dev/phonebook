@@ -34,7 +34,7 @@
   <h3 align="center">PhoneBook</h3>
 
   <p align="center">
-    </h3>A Stupid Phonebook</h3>
+    <h3>A Stupid Phonebook</h3>
     <br />   
   </p>
 </p>
