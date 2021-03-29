@@ -63,7 +63,7 @@ inside local Sqlite database
    ```sh
    python3 main.py
    ```
-3. At First Use option 1 to Create a database first and later perform operations
+3. At First Use option 1 to Create a database first and later perform operations on the data
 
 
 
