@@ -7,10 +7,17 @@
 # No gui becouse i cant understand django and tkinter is .....
 
 import sqlite3
+import time
 from os import *
+import base64
 
 #Create a new entry inside database phonebook
 class new_contact():
+
+    def en(self,plain):
+        return base64.b64encode(plain.encode('ascii')).decode("ascii")
+    def de(self,cipher):
+        return base64.b64decode(cipher.encode('ascii')).decode("ascii")
 
 	#create database before entring the database
     def __init__(self):
@@ -37,12 +44,16 @@ class new_contact():
         return contact
 
     def __surity(self):
-        print('Do you want to save this in phonebook?(Y/N)')
         print('Name:'+self.__name)
         print('contact:'+str(self.__contact))
+        print('Do you want to save this in phonebook?(Y/N)')
         c = input('# ')
         if c == 'Y' or c == 'y':
-            self.storing_in_db()
+            try:
+                self.storing_in_db()
+                print('\n\tSaved Successfully\n')
+            except:
+                print('\n\tSaving failed!\n')
         elif c == 'N' or c == 'n':
             self.asking_stuff()
         else:
@@ -50,7 +61,7 @@ class new_contact():
             self.__surity()
 #storing in database
     def storing_in_db(self):
-        self.conn.execute(f"insert into phonebook values('{self.__name}','{self.__contact}')")
+        self.conn.execute(f"insert into phonebook values('{self.en(self.__name)}','{self.en(self.__contact)}')")
         self.conn.commit()
 
 #edit contact class to edit or search preexisting record inside database
@@ -84,6 +95,7 @@ class edit_contact(new_contact):
             self.conn = sqlite3.connect('info.db')
             c = self.conn.cursor()
             i = input("Enter query to search:")
+
             if(i.isdigit()):
                 print("Searching by number")
                 query = "select * from phonebook where number='{}'"
@@ -91,11 +103,11 @@ class edit_contact(new_contact):
                 print('Searching by name')
                 query = "select * from phonebook where name='{}'"
 
-            c.execute(query.format(i))
+            c.execute(query.format(self.en(i)))
             
             a = c.fetchall()
             for i in a:
-                print('Name: '+str(i[0])+"\nContact :"+str(i[1]))
+                print('Name: '+str(self.de(i[0]))+"\nContact :"+str(self.de(i[1])))
 
 
         except:
@@ -108,15 +120,15 @@ class edit_contact(new_contact):
             c = self.conn.cursor()
             if(n == 'name'):
                 name = new_contact.ask_name(self)
-                c.execute(f'select number from phonebook where name="{name}"')
+                c.execute(f'select number from phonebook where name="{self.en(name)}"')
                 number = c.fetchone()[0]
                 name = input('Enter new name:')
-                c.execute(f'update phonebook set name="{name}" where number="{number}";')
+                c.execute(f'update phonebook set name="{self.en(name)}" where number="{self.en(number)}";')
                 
             else:
                 name = new_contact.ask_name(self)
                 number = input('Enter new number:')
-                c.execute(f'update phonebook set number="{number}" where name="{name}";')
+                c.execute(f'update phonebook set number="{self.en(number)}" where name="{self.en(name)}";')
                 
             self.conn.commit()
         except:
@@ -124,7 +136,15 @@ class edit_contact(new_contact):
 
         
 #delect contact class to delete contact from info db
-class delete_contact():
+class delete_contact(new_contact):
+    def cls(self):
+    # for windows
+        if name == 'nt':
+            _ = system('cls')
+        # for mac and linux(here, os.name is 'posix')
+        else:
+            _ = system('clear')
+
     def __init__(self):
         try:
             a = []
@@ -134,25 +154,19 @@ class delete_contact():
             for i in c.execute(f'select * from phonebook'):
                 a.append(i[0])
 
-            if name in a:
-                c.execute(f'delete from phonebook where name="{name}"')
-                print('\nContact Deleted Successfully')
-                cls()
+            if self.en(name) in a:
+                c.execute(f'delete from phonebook where name="{self.en(name)}"')
+                self.cls()
+                print('\n\n\tContact Deleted Successfully')
+                time.sleep(2.5)
+                self.cls()
             else:
                 print('Not found inside database')
             self.conn.commit()
         except:
             print('no database found')
 
-    def cls(self):
-  
-        # for windows
-        if name == 'nt':
-            system('cls')
-    
-        # for mac and linux(here, os.name is 'posix')
-        else:
-            system('clear')
+
 
 # Clears screen
 def clear():
