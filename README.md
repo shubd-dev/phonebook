@@ -44,7 +44,7 @@
 
 
 
-A Command-Line-Interface for storing 
+A Command-Line-Interface for storing in symmetric encryption
 <ul>
 <li>contact name</li> 
 <li>number </li>
